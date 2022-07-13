@@ -51,7 +51,7 @@ class WheelAnimationScrollerListener(private val itemWith: Int) : RecyclerView.O
         //計算滾動條寬度
         val transMaxRangeA : Float = line.getWidth() - mainLine.getWidth()
         //設置滾動條移動
-        mainLine.setTranslationX(transMaxRange * proportion)
+        mainLine.setTranslationX(transMaxRangeA * proportionA)
     }
 
     fun updatePosition(currentPosition: Int) {
