@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PagerSnapHelper
+import com.jastzeonic.infinityrecyclerviewdemo.component.HorizontalScrollBarDecoration
 import com.jastzeonic.infinityrecyclerviewdemo.component.InfinityRecycleViewAdapter
 import com.jastzeonic.infinityrecyclerviewdemo.model.ImageModel
 import com.jastzeonic.infinityrecyclerviewdemo.component.MarginDecoration
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             galleryScrollerListener.updatePosition(currentPosition)
 
         }
+        // call Method 3
+        recyclerView.addItemDecoration(HorizontalScrollBarDecoration())
 
     }
 
