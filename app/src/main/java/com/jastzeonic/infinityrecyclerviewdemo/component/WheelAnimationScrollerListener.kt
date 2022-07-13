@@ -1,6 +1,9 @@
 package com.jastzeonic.infinityrecyclerviewdemo.component
 
 import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import com.jastzeonic.infinityrecyclerviewdemo.R
+
 
 class WheelAnimationScrollerListener(private val itemWith: Int) : RecyclerView.OnScrollListener() {
 
@@ -8,13 +11,27 @@ class WheelAnimationScrollerListener(private val itemWith: Int) : RecyclerView.O
     private var mPosition = 0
     private val animationValue = 0.2f
 
+    override fun onScrollStateChanged(recyclerView: RecyclerView, newState:Int){
+        super.onScrollStateChanged(recyclerView, newState)
+    }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
-
         setScrollInfo(recyclerView, dx)
-
+        // 整體的總寬度，注意是整體，包括在顯示區域之外的。
+        val range = rv_main_app.computeHorizontalScrollRange()
+        val density : Float = getScreenDensity()
+        // 計算出溢出部分的寬度，即屏幕外剩下的寬度
+        val maxEndx = range - ScreenUtils.getScreenWidth() + (25* density)+5
+        // 滑動的距離
+        endX[0] = endX[0] + dx
+        // 計算比例
+        val proportion = endX[0]/maxEndx
+        // 計算滾動條寬度
+        val transMaxRange = (R.id.view_slip_front.getParent() as ViewGroup).width - R.id.view_slip_front.getWidth()
+        // 設置滾動條移動
+        R.id.view_slip_front.setTranslationX(transMaxRange * proportion)
     }
 
     fun updatePosition(currentPosition: Int) {
