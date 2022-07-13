@@ -19,8 +19,9 @@ class WheelAnimationScrollerListener(private val itemWith: Int) : RecyclerView.O
         super.onScrolled(recyclerView, dx, dy)
 
         setScrollInfo(recyclerView, dx)
+
         // 整體的總寬度，注意是整體，包括在顯示區域之外的。
-        val range = rv_main_app.computeHorizontalScrollRange()
+        var range = rv_main_app.computeHorizontalScrollRange()
         val density : Float = getScreenDensity()
         // 計算出溢出部分的寬度，即屏幕外剩下的寬度
         val maxEndx = range - ScreenUtils.getScreenWidth() + (25* density)+5
@@ -32,6 +33,25 @@ class WheelAnimationScrollerListener(private val itemWith: Int) : RecyclerView.O
         val transMaxRange = (R.id.view_slip_front.getParent() as ViewGroup).width - R.id.view_slip_front.getWidth()
         // 設置滾動條移動
         R.id.view_slip_front.setTranslationX(transMaxRange * proportion)
+
+
+
+        // Method 2
+        //整體的總寬度，注意是整體，包括在顯示區域之外的。
+        val temp = recyclerView.computeHorizontalScrollRange()
+        if (temp > range){
+            range = temp
+        }
+        //計算水平滾動的距離
+        val offsetA = recyclerView.computeHorizontalScrollOffset()
+        //計算水平滾動的範圍
+        val extent = recyclerView.computeHorizontalScrollExtent()
+        //計算滑動比例
+        val proportionA :Float = (offsetA * 1.0 / (range - extent))
+        //計算滾動條寬度
+        val transMaxRangeA : Float = line.getWidth() - mainLine.getWidth()
+        //設置滾動條移動
+        mainLine.setTranslationX(transMaxRange * proportion)
     }
 
     fun updatePosition(currentPosition: Int) {
